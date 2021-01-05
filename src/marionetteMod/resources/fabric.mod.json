@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "marionetteexampletest",
+  "version": "0.1.0-SNAPSHOT",
+  "name": "Marionette Example Test Mod",
+  "description": "Marionette Example Test mod for demonstrating the test part of Marionette",
+  "authors": [],
+  "contact": {
+    "homepage": "",
+    "sources": ""
+  },
+  "license": "MIT",
+  "icon": "",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.kneelawk.marionetteexample.MarionetteExampleTestMod"
+    ],
+    "client": [],
+    "server": [],
+    "preLaunch": []
+  },
+  "mixins": [],
+  "depends": {
+    "fabricloader": ">=0.9.2",
+    "fabric": "*",
+    "minecraft": "1.16.x"
+  },
+  "suggests": {
+    "flamingo": "*"
+  }
+}

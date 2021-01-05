@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "marionetteexample",
+  "version": "0.1.0-SNAPSHOT",
+  "name": "Marionette Example Mod",
+  "description": "Marionette Example mod to demonstrate how Marionette can be used",
+  "authors": [],
+  "contact": {
+    "homepage": "",
+    "sources": ""
+  },
+  "license": "MIT",
+  "icon": "",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.kneelawk.marionetteexample.MarionetteExampleMod"
+    ],
+    "client": [],
+    "server": [],
+    "preLaunch": []
+  },
+  "mixins": [],
+  "depends": {
+    "fabricloader": ">=0.9.2",
+    "fabric": "*",
+    "minecraft": "1.16.x"
+  },
+  "suggests": {
+    "flamingo": "*"
+  }
+}
