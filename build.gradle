@@ -96,5 +96,10 @@ publishing {
 marionette {
 	useJUnitPlatform()
 	testSets {
+		marionette {
+			commonSignals {
+				oneShot('gameStarted')
+			}
+		}
 	}
 }

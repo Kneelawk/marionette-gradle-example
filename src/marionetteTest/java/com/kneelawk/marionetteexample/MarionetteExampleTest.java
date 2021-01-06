@@ -9,10 +9,13 @@ import com.kneelawk.marionette.rt.rmi.RMIConnectionManager;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 
 import java.io.IOException;
 import java.io.PrintStream;
 import java.rmi.RemoteException;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 public class MarionetteExampleTest {
     static RMIConnectionManager manager;
@@ -28,7 +31,8 @@ public class MarionetteExampleTest {
     }
 
     @Test
-    void startClient() throws IOException, InstanceException, InterruptedException {
+    @Timeout(value = 2, unit = TimeUnit.MINUTES)
+    void startClient() throws IOException, InstanceException, InterruptedException, ExecutionException {
         MinecraftClientInstanceBuilder builder = new MinecraftClientInstanceBuilder("client");
 
         System.out.println("#############################");
@@ -40,6 +44,9 @@ public class MarionetteExampleTest {
         System.out.println("Calling startMinecraft()");
         minecraft.startMinecraft();
 
+        System.out.println("Waiting for minecraft to start up...");
+        minecraft.createGameStartedFuture().get();
+
         System.out.println("Calling finish()");
         minecraft.finish();
 
@@ -49,7 +56,8 @@ public class MarionetteExampleTest {
     }
 
     @Test
-    void startServer() throws IOException, InterruptedException, InstanceException {
+    @Timeout(value = 2, unit = TimeUnit.MINUTES)
+    void startServer() throws IOException, InterruptedException, InstanceException, ExecutionException {
         MinecraftServerInstanceBuilder minecraftBuilder = new MinecraftServerInstanceBuilder("server");
 
         System.out.println("#############################");
@@ -59,6 +67,9 @@ public class MarionetteExampleTest {
 
         System.out.println("Calling startMinecraft()");
         minecraft.startMinecraft();
+
+        System.out.println("Waiting for minecraft to start up...");
+        minecraft.createGameStartedFuture().get();
 
         // make sure the server stops
         System.out.println("Sending the server /stop command...");
