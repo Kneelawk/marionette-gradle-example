@@ -47,6 +47,9 @@ public class MarionetteExampleTest {
         System.out.println("Waiting for minecraft to start up...");
         minecraft.createGameStartedFuture().get();
 
+        System.out.println("Waiting for gameTick callback...");
+        minecraft.addGameTickCallback((thread, p0) -> System.out.println("Current Thread: " + p0)).get();
+
         System.out.println("Calling finish()");
         minecraft.finish();
 
@@ -70,6 +73,9 @@ public class MarionetteExampleTest {
 
         System.out.println("Waiting for minecraft to start up...");
         minecraft.createGameStartedFuture().get();
+
+        System.out.println("Waiting for gameTick callback...");
+        minecraft.addGameTickCallback((thread, p0) -> System.out.println("Current Thread: " + p0)).get();
 
         // make sure the server stops
         System.out.println("Sending the server /stop command...");
