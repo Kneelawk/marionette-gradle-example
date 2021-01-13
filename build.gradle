@@ -117,16 +117,18 @@ marionette {
 				proxy('net.minecraft.client.MinecraftClient') {
 					method('scheduleStop')
 					method('openScreen') {
-						argument 'net.minecraft.client.gui.screen.ConnectScreen'
+						argument 'net.minecraft.client.gui.screen.Screen'
 					}
 				}
 				proxy('net.minecraft.client.gui.screen.Screen')
 				proxy('net.minecraft.client.gui.screen.TitleScreen') {
+					superClass = 'net.minecraft.client.gui.screen.Screen'
 					constructor()
 				}
 				proxy('net.minecraft.client.gui.screen.ConnectScreen') {
+					superClass = 'net.minecraft.client.gui.screen.Screen'
 					constructor {
-						argument 'net.minecraft.client.gui.screen.TitleScreen'
+						argument 'net.minecraft.client.gui.screen.Screen'
 						argument 'net.minecraft.client.MinecraftClient'
 						argument 'java.lang.String'
 						argument 'int'

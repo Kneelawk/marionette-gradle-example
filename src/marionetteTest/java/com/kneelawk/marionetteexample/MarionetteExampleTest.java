@@ -93,4 +93,47 @@ public class MarionetteExampleTest {
         System.out.println("# Minecraft Server finished #");
         System.out.println("#############################");
     }
+
+    @Test
+    @Timeout(value = 2, unit = TimeUnit.MINUTES)
+    void startBoth() throws IOException, ExecutionException, InterruptedException, InstanceException {
+        MinecraftServerInstanceBuilder serverBuilder = new MinecraftServerInstanceBuilder("server1");
+        MinecraftClientInstanceBuilder clientBuilder = new MinecraftClientInstanceBuilder("client1");
+
+        serverBuilder.setGamemode("creative");
+
+        System.out.println("########################################");
+        System.out.println("# Starting Minecraft Server And Client #");
+        System.out.println("########################################");
+
+        MinecraftServerInstance serverInstance = serverBuilder.start(manager);
+        MinecraftClientInstance clientInstance = clientBuilder.start(manager);
+
+        System.out.println("Calling startMinecraft()");
+        serverInstance.startMinecraft();
+        clientInstance.startMinecraft();
+
+        System.out.println("Sending /op command...");
+        PrintStream ps = new PrintStream(serverInstance.getProcess().getOutputStream());
+        ps.println("/op client1");
+        ps.flush();
+
+        System.out.println("Waiting for client to start up...");
+        clientInstance.createGameStartedFuture().get();
+
+        System.out.println("Waiting for server to start up...");
+        serverInstance.createGameStartedFuture().get();
+
+        System.out.println("Conning the client to the server...");
+        clientInstance.addGameTickCallback((thread, p0, p1) -> p0.openScreen(thread, clientInstance
+                .newConnectScreen(thread, clientInstance.newTitleScreen(thread), p0, "localhost", 25565))).get();
+
+        System.out.println("Calling finish()");
+        serverInstance.finish();
+        clientInstance.finish();
+
+        System.out.println("#######################################");
+        System.out.println("# Minecrft Server and Client finished #");
+        System.out.println("#######################################");
+    }
 }
