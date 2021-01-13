@@ -48,7 +48,10 @@ public class MarionetteExampleTest {
         minecraft.createGameStartedFuture().get();
 
         System.out.println("Waiting for gameTick callback...");
-        minecraft.addGameTickCallback((thread, p0) -> System.out.println("Current Thread: " + p0)).get();
+        minecraft.addGameTickCallback((thread, p0, p1) -> {
+            System.out.println("Current Thread: " + p1);
+            p0.scheduleStop(thread);
+        }).get();
 
         System.out.println("Calling finish()");
         minecraft.finish();
@@ -75,7 +78,7 @@ public class MarionetteExampleTest {
         minecraft.createGameStartedFuture().get();
 
         System.out.println("Waiting for gameTick callback...");
-        minecraft.addGameTickCallback((thread, p0) -> System.out.println("Current Thread: " + p0)).get();
+        minecraft.addGameTickCallback((thread, p0, p1) -> System.out.println("Current Thread: " + p1)).get();
 
         // make sure the server stops
         System.out.println("Sending the server /stop command...");

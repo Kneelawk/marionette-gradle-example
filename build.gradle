@@ -98,12 +98,43 @@ marionette {
 	testSets {
 		marionette {
 			commonSignals {
-				oneShot('gameStarted')
+				oneShot 'gameStarted'
 			}
-			commonQueues {
+			clientQueues {
 				gameTick {
-					argument('java.lang.String')
+					argument 'net.minecraft.client.MinecraftClient'
+					argument 'java.lang.String'
+					exception 'java.rmi.RemoteException'
 				}
+			}
+			serverQueues {
+				gameTick {
+					argument 'net.minecraft.server.MinecraftServer'
+					argument 'java.lang.String'
+				}
+			}
+			clientProxies {
+				proxy('net.minecraft.client.MinecraftClient') {
+					method('scheduleStop')
+					method('openScreen') {
+						argument 'net.minecraft.client.gui.screen.ConnectScreen'
+					}
+				}
+				proxy('net.minecraft.client.gui.screen.Screen')
+				proxy('net.minecraft.client.gui.screen.TitleScreen') {
+					constructor()
+				}
+				proxy('net.minecraft.client.gui.screen.ConnectScreen') {
+					constructor {
+						argument 'net.minecraft.client.gui.screen.TitleScreen'
+						argument 'net.minecraft.client.MinecraftClient'
+						argument 'java.lang.String'
+						argument 'int'
+					}
+				}
+			}
+			serverProxies {
+				proxy('net.minecraft.server.MinecraftServer')
 			}
 		}
 	}

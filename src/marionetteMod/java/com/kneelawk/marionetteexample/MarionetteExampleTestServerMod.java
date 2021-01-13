@@ -10,7 +10,7 @@ public class MarionetteExampleTestServerMod implements DedicatedServerModInitial
     @Override
     public void onInitializeServer() {
         ServerLifecycleEvents.SERVER_STARTED.register(minecraftServer -> ServerGlobalSignals.signalGameStarted());
-        ServerTickEvents.END_SERVER_TICK.register(ms -> ServerGlobalQueues.pollGameTickCallbacks(
-                (callback, currentThread) -> callback.callback(currentThread, Thread.currentThread().getName())));
+        ServerTickEvents.END_SERVER_TICK
+                .register(ms -> ServerGlobalQueues.callGameTickCallbacks(ms, Thread.currentThread().getName()));
     }
 }
