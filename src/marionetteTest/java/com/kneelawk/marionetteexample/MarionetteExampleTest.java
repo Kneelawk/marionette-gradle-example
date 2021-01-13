@@ -128,6 +128,15 @@ public class MarionetteExampleTest {
         clientInstance.addGameTickCallback((thread, p0, p1) -> p0.openScreen(thread, clientInstance
                 .newConnectScreen(thread, clientInstance.newTitleScreen(thread), p0, "localhost", 25565))).get();
 
+        System.out.println("Waiting for the client to finish connecting to the server...");
+        clientInstance.createGameJoinFuture().get();
+
+        System.out.println("Sending /stop command from client...");
+        clientInstance.addGameTickCallback((thread, p0, p1) -> p0.getPlayer().sendChatMessage(thread, "/stop"));
+
+        System.out.println("Shutting down the client...");
+        clientInstance.addGameTickCallback((thread, p0, p1) -> p0.scheduleStop(thread));
+
         System.out.println("Calling finish()");
         serverInstance.finish();
         clientInstance.finish();

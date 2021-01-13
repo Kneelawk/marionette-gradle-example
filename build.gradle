@@ -100,6 +100,9 @@ marionette {
 			commonSignals {
 				oneShot 'gameStarted'
 			}
+			clientSignals {
+				reusable 'gameJoin'
+			}
 			clientQueues {
 				gameTick {
 					argument 'net.minecraft.client.MinecraftClient'
@@ -119,6 +122,7 @@ marionette {
 					method('openScreen') {
 						argument 'net.minecraft.client.gui.screen.Screen'
 					}
+					getter('player', 'net.minecraft.client.network.ClientPlayerEntity')
 				}
 				proxy('net.minecraft.client.gui.screen.Screen')
 				proxy('net.minecraft.client.gui.screen.TitleScreen') {
@@ -132,6 +136,11 @@ marionette {
 						argument 'net.minecraft.client.MinecraftClient'
 						argument 'java.lang.String'
 						argument 'int'
+					}
+				}
+				proxy('net.minecraft.client.network.ClientPlayerEntity') {
+					method('sendChatMessage') {
+						argument 'java.lang.String'
 					}
 				}
 			}
